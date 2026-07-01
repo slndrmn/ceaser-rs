@@ -4,40 +4,40 @@ fn flush() {
     io::stdout().flush().unwrap();
 }
 
-fn encrypt(msg:String,step:i32) -> String {
-    let mut encrypted_msg = String::new();
+fn encode(msg:String,step:i32) -> String {
+    let mut encoded_msg = String::new();
     for character in msg.chars() {
         let ascii = (character as u8) + ((step % 26) as u8);
         if ascii > 122 {
-            encrypted_msg += &((ascii - 26) as char).to_string()
+            encoded_msg += &((ascii - 26) as char).to_string()
         } else if character == ' ' {
-            encrypted_msg += " "
+            encoded_msg += " "
         } else {
-            encrypted_msg  += &(ascii as char).to_string()
+            encoded_msg  += &(ascii as char).to_string()
         }
     }
-    encrypted_msg
+    encoded_msg
 }
 
-fn decrypt(msg:String) {
+fn decode(msg:String) {
     for step in 1..=26 {
-        let mut decrypted_msg = String::new();
+        let mut decoded_msg = String::new();
         for character in msg.chars() {
             let ascii = (character as u8) + ((step % 26) as u8);
             if ascii > 122 {
-                decrypted_msg += &((ascii - 26) as char).to_string()
+                decoded_msg += &((ascii - 26) as char).to_string()
             } else if character == ' ' {
-                decrypted_msg += " "
+                decoded_msg += " "
             } else {
-                decrypted_msg += &(ascii as char).to_string()
+                decoded_msg += &(ascii as char).to_string()
             }
         }
-        println!("{}",decrypted_msg)
+        println!("{}",decoded_msg)
     }
 }
 
 fn main() {
-    print!("1- encrypt a message\n2- decrypt a message\n");
+    print!("1- encode a message\n2- decode a message\n");
     flush();
     loop {
         let mut desicion = String::new();
@@ -57,7 +57,7 @@ fn main() {
             io::stdin().read_line(&mut step).expect("erorororo");
 
             if let Ok(i) = step.trim().parse::<i32>() {
-                println!("{}",encrypt(s.trim().to_string(), i))
+                println!("{}",encode(s.trim().to_string(), i))
             } else {
                 println!("bradar only integers allowed in dat section :rage:")
             }
@@ -68,7 +68,7 @@ fn main() {
             flush();
             io::stdin().read_line(&mut s).expect("eorororoor");
 
-            decrypt(s.trim().to_string());
+            decode(s.trim().to_string());
         } else {
             println!("bradar ar yo stpid there is only 2 options amk")
         }
