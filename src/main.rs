@@ -4,6 +4,14 @@ fn flush() {
     io::stdout().flush().unwrap();
 }
 
+fn input(s:String) -> String {
+    print!("{}",s);
+    flush();
+    let mut result = String::new();
+    io::stdin().read_line(&mut result).expect("erorroroor");
+    result
+}
+
 fn encode(msg:String,step:i32) -> String {
     let mut encoded_msg = String::new();
     for character in msg.chars() {
@@ -40,35 +48,21 @@ fn main() {
     print!("1- encode a message\n2- decode a message\n");
     flush();
     loop {
-        let mut desicion = String::new();
-        print!("> ");
-        flush();
-        io::stdin().read_line(&mut desicion).expect("erorororo");
+        let desicion = input("> ".to_string());
 
         if desicion.trim() == "1" {
-            let mut s = String::new();
-            let mut step = String::new();
-
-            print!("wats da message: ");
-            flush();
-            io::stdin().read_line(&mut s).expect("erorororo");
-            print!("wats da step (only integers allowed): ");
-            flush();
-            io::stdin().read_line(&mut step).expect("erorororo");
+            let s = input("wats da msg: ".to_string());
+            let step = input("wats da step (only integers allowed): ".to_string());
 
             if let Ok(i) = step.trim().parse::<i32>() {
-                println!("{}",encode(s.trim().to_string(), i))
+                println!("{}",encode(s.trim().to_lowercase().to_string(), i))
             } else {
                 println!("bradar only integers allowed in dat section :rage:")
             }
         } else if desicion.trim() == "2" {
-            let mut s = String::new();
+            let s = input("wats da msage to decode: ".to_string());
 
-            print!("wats da msage to decrypt: ");
-            flush();
-            io::stdin().read_line(&mut s).expect("eorororoor");
-
-            decode(s.trim().to_string());
+            decode(s.trim().to_lowercase().to_string());
         } else {
             println!("bradar ar yo stpid there is only 2 options amk")
         }
